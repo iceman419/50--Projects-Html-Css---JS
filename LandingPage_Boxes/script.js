@@ -69,6 +69,13 @@ const techs = ["JS", "React", "Vue", "Angula", "Node", "Sass", "Amber"];
 
 let current = 1;
 
+const textStyle = () => {
+  heading.style.color = colors[current - 1];
+  heading.textContent = techs[current - 1];
+  btn.style.backgroundColor = colors[current - 1];
+  btn.firstElementChild.textContent = techs[current - 1];
+};
+
 let interval = setInterval(() => {
   if (current > boxes.length) current = 1;
   boxes.forEach((box) => {
@@ -78,5 +85,18 @@ let interval = setInterval(() => {
       box.classList.remove("active");
     }
   });
+  textStyle();
   current++;
-}, 1000);
+}, 5000);
+
+boxes.forEach((box) => {
+  box.addEventListener("click", () => {
+    boxes.forEach((cube) => {
+      cube.classList.remove("active");
+    });
+    box.classList.add("active");
+    current = box.classList[1].split("-")[1] * 1;
+    textStyle();
+    clearInterval(interval);
+  });
+});
